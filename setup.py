@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages
-
 setup(
     name="tictactoe-yourusername",
     version="0.1.0",
@@ -21,5 +20,5 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.10',
+    python_requires='3.7.4',
 )
