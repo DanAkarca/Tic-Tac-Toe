@@ -1,24 +1,25 @@
 from setuptools import setup, find_packages
+
 setup(
-    name="tictactoe-yourusername",
+    name="tic-tac-toe",
     version="0.1.0",
     packages=find_packages(),
     install_requires=[],
     entry_points={
         'console_scripts': [
-            'tictactoe=tictactoe.main:play_game',
+            'tic-tac-toe=main:play_game',
         ],
     },
     author="Danyal Akarca",
     author_email="danyal.akarca@gmail.com",
     description="A simple Tic-Tac-Toe game",
-    long_description="This package provides a command-line implementation of the classic Tic-Tac-Toe game.",
+    long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/DanAkarca/tictactoe",
+    url="https://github.com/DanAkarca/tic-tac-toe",
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires='3.7.4',
+    python_requires='>=3.7',
 )

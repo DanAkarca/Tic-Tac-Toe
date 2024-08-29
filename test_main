@@ -1,0 +1,79 @@
+import unittest
+from main import TicTacToe, play_game
+from io import StringIO
+import sys
+
+class TestTicTacToe(unittest.TestCase):
+    def setUp(self):
+        self.game = TicTacToe()
+
+    def test_initial_board(self):
+        self.assertEqual(self.game.board, [' ' for _ in range(9)])
+        self.assertEqual(self.game.current_player, 'X')
+
+    def test_make_move(self):
+        self.assertTrue(self.game.make_move(0))
+        self.assertEqual(self.game.board[0], 'X')
+        self.assertEqual(self.game.current_player, 'O')
+
+    def test_invalid_move(self):
+        self.game.make_move(0)
+        self.assertFalse(self.game.make_move(0))
+
+    def test_check_winner_row(self):
+        self.game.board = ['X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ']
+        self.assertEqual(self.game.check_winner(), 'X')
+
+    def test_check_winner_column(self):
+        self.game.board = ['O', ' ', ' ', 'O', ' ', ' ', 'O', ' ', ' ']
+        self.assertEqual(self.game.check_winner(), 'O')
+
+    def test_check_winner_diagonal(self):
+        self.game.board = ['X', ' ', ' ', ' ', 'X', ' ', ' ', ' ', 'X']
+        self.assertEqual(self.game.check_winner(), 'X')
+
+    def test_check_tie(self):
+        self.game.board = ['X', 'O', 'X', 'X', 'O', 'O', 'O', 'X', 'X']
+        self.assertEqual(self.game.check_winner(), 'Tie')
+
+    def test_game_in_progress(self):
+        self.game.board = ['X', 'O', 'X', ' ', 'O', ' ', ' ', ' ', ' ']
+        self.assertIsNone(self.game.check_winner())
+
+    def test_play_game(self):
+        # Redirect stdout to capture print statements
+        captured_output = StringIO()
+        sys.stdout = captured_output
+
+        # Simulate user input for a full game
+        user_input = StringIO("0\n1\n3\n4\n6\n")
+        sys.stdin = user_input
+
+        play_game()
+
+        # Reset redirect
+        sys.stdout = sys.__stdout__
+        sys.stdin = sys.__stdin__
+
+        # Check if the game output contains expected strings
+        output = captured_output.getvalue()
+        self.assertIn("Player X wins!", output)
+        self.assertIn(" | ".join(['X', 'O', ' ']), output)
+        self.assertIn(" | ".join(['X', 'O', ' ']), output)
+        self.assertIn(" | ".join(['X', ' ', ' ']), output)
+
+    def test_play_game_tie(self):
+        with patch('builtins.input', side_effect=['0', '1', '2', '3', '4', '5', '6', '7', '8']):
+            with patch('sys.stdout', new=StringIO()) as fake_out:
+                play_game()
+                output = fake_out.getvalue()
+        
+        # Check for tie condition instead of specific board configuration
+        self.assertIn("It's a tie!", output)
+        
+        # Optionally, check if all positions are filled
+        for i in range(9):
+            self.assertIn(str(i), output)
+
+if __name__ == '__main__':
+    unittest.main()
