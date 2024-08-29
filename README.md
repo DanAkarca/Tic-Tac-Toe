@@ -5,7 +5,7 @@ A simple, command-line Tic-Tac-Toe game implemented in Python.
 ## Installation
 
 You can install this package directly from GitHub using pip:
-pip install git+https://github.com/DanAkarca/tictactoe.git
+pip install git+https://github.com/DanAkarca/tic-tac-toe.git
 
 ## Usage
 
