@@ -2,6 +2,8 @@
 
 A simple, command-line Tic-Tac-Toe game implemented in Python.
 
+Just playing around with this to test out some things.
+
 ## Installation
 
 You can install this package directly from GitHub using pip:
